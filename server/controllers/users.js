@@ -1,45 +1,72 @@
-import { v4 as uuidv4 } from "uuid";
-let users = [];
+import connection from "../config/index.js";
 
 export const getUsers = (req, res) => {
-  res.send(users);
+  connection.query("SELECT * FROM Users", (err, result) => {
+    if (err) {
+      return res.send("Error");
+    }
+
+    return res.json(result);
+  });
 };
 
 export const createUser = (req, res) => {
   const user = req.body;
 
-  users.push({ ...user, id: uuidv4() });
+  connection.query("INSERT INTO Users SET ?", [user], (err, result) => {
+    if (err) {
+      return res.send("Error");
+    }
 
-  res.send(`User ${user.firstName} added`);
+    return res.json(result);
+  });
 };
 
 export const getUser = (req, res) => {
   const id = req.params.id;
 
-  const found = users.find((user) => user.id == id);
+  connection.query(
+    "SELECT * FROM Users WHERE userId = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        return res.send("Error");
+      }
 
-  res.send(found);
+      return res.json(result);
+    }
+  );
 };
 
 export const deleteUser = (req, res) => {
   const id = req.params.id;
 
-  users = users.filter((user) => user.id != id);
+  connection.query(
+    "DELETE FROM Users WHERE userId = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        return res.send("Error");
+      }
 
-  res.send(users);
+      return res.json(result);
+    }
+  );
 };
 
 export const updateUser = (req, res) => {
   const userId = req.params.id;
-  const { firstName, lastName, age } = req.body;
+  const values = req.body;
 
-  const user = users.find((user) => user.id == userId);
+  connection.query(
+    "UPDATE Users SET ? WHERE userId = ?",
+    [values, userId],
+    (err, result) => {
+      if (err) {
+        return res.send("Error");
+      }
 
-  if (firstName) user.firstName = firstName;
-
-  if (lastName) user.lastName = lastName;
-
-  if (age) user.age = age;
-
-  res.send(users);
+      return res.json(result);
+    }
+  );
 };
