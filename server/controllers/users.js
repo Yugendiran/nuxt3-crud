@@ -12,9 +12,9 @@ export const getUsers = (req, res) => {
 
 export const createUser = (req, res) => {
   const user = req.body;
-
   connection.query("INSERT INTO Users SET ?", [user], (err, result) => {
     if (err) {
+      console.error(err);
       return res.send("Error");
     }
 

@@ -48,19 +48,6 @@
 
 <script setup>
 const { data: users } = await useFetch(() => `http://localhost:5000/api/users`);
-
-let data = {
-  userName: "",
-  userAge: 12,
-};
-
-function addUser() {
-  console.log(data);
-  useFetch(() => `http://localhost:5000/api/users`, {
-    method: "post",
-    body: data,
-  });
-}
 </script>
 
 <script>
@@ -70,20 +57,25 @@ export default {
       newUser: "",
       newUserModel: false,
       users: [],
-      //   data: {
-      //     userName: "Yugiadd",
-      //     userAge: 12,
-      //   },
+      data: {
+        userName: "Yugiadd",
+        userAge: 12,
+      },
     };
   },
   methods: {
-    // addUser() {
-    //   console.log(this.data);
-    //   useFetch(() => `http://localhost:5000/api/users`, {
-    //     method: "post",
-    //     body: this.data,
-    //   });
-    // },
+    addUser() {
+      fetch(`http://localhost:5000/api/users`, {
+        method: "POST",
+        body: JSON.stringify(this.data),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((result) => {
+        console.log(result);
+      });
+    },
   },
 };
 </script>
