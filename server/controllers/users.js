@@ -34,10 +34,16 @@ export const getUser = (req, res) => {
     [id],
     (err, result) => {
       if (err) {
-        return res.send("Error");
+        console.error(err);
+        return res.json({
+          success: false,
+        });
       }
-
-      return res.json(result);
+      console.log(result);
+      return res.json({
+        success: true,
+        user: result[0],
+      });
     }
   );
 };

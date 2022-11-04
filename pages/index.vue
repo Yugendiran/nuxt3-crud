@@ -21,13 +21,21 @@
         </tr>
         <tr v-for="(user, index) in users" :key="index">
           <td class="px-5 py-3">{{ index + 1 }}</td>
-          <td class="px-5 py-3">{{ user.userName }}</td>
+          <td class="px-5 py-3">
+            <NuxtLink :to="`/user/${user.userId}`">{{
+              user.userName
+            }}</NuxtLink>
+          </td>
           <td class="px-5 py-3">{{ user.userAge }}</td>
           <td class="px-5 py-3">
-            <span @click="openEditModel(index)">Edit</span>
+            <span @click="openEditModel(index)">
+              <img src="/edit.svg" class="h-5 w-5" />
+            </span>
           </td>
           <td class="px-5 py-3">
-            <span @click="deleteUser(index)">Delete</span>
+            <span @click="deleteUser(index)">
+              <img src="/trash.svg" class="h-5 w-5" />
+            </span>
           </td>
         </tr>
       </table>
@@ -55,6 +63,13 @@
       >
         Add user
       </button>
+      <span
+        @click="
+          newUserModel = false;
+          data = {};
+        "
+        >Close</span
+      >
     </div>
     <div
       v-if="editUserModel"
@@ -77,8 +92,15 @@
         @click="editUser(data.index)"
         class="bg-blue-400 px-5 py-2 rounded-full text-white font-semibold"
       >
-        Add user
+        Edit user
       </button>
+      <span
+        @click="
+          editUserModel = false;
+          data = {};
+        "
+        >Close</span
+      >
     </div>
   </div>
 </template>
@@ -122,6 +144,8 @@ export default {
       }).then((response) => {
         if (response.success) {
           this.users.splice(index, 1);
+          this.editUserModel = false;
+          this.data = {};
           return;
         }
         console.log("error");
