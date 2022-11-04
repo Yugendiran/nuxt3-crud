@@ -12,13 +12,17 @@ export const getUsers = (req, res) => {
 
 export const createUser = (req, res) => {
   const user = req.body;
-  connection.query("INSERT INTO Users SET ?", [user], (err, result) => {
+  connection.query("INSERT INTO Users SET ?", [user], (err, response) => {
     if (err) {
       console.error(err);
-      return res.send("Error");
+      return res.json({
+        success: false,
+      });
     }
-
-    return res.json(result);
+    return res.json({
+      success: true,
+      response,
+    });
   });
 };
 
@@ -46,10 +50,15 @@ export const deleteUser = (req, res) => {
     [id],
     (err, result) => {
       if (err) {
-        return res.send("Error");
+        console.error(err);
+        return res.json({
+          success: false,
+        });
       }
-
-      return res.json(result);
+      return res.json({
+        success: true,
+        result,
+      });
     }
   );
 };
@@ -63,10 +72,15 @@ export const updateUser = (req, res) => {
     [values, userId],
     (err, result) => {
       if (err) {
-        return res.send("Error");
+        console.error(err);
+        return res.json({
+          success: false,
+        });
       }
-
-      return res.json(result);
+      return res.json({
+        success: true,
+        result,
+      });
     }
   );
 };
