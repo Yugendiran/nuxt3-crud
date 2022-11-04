@@ -6,9 +6,10 @@
         class="w-max bg-blue-500 px-3 mb-5 rounded-full text-white"
         >Back</NuxtLink
       >
-      <h1>User Id: {{ user.value.user.userId }}</h1>
-      <h1>User Name: {{ user.value.user.userName }}</h1>
-      <h1>User Age: {{ user.value.user.userAge }}</h1>
+
+      <h1>User Id: {{ data.user.userId }}</h1>
+      <h1>User Name: {{ data.user.userName }}</h1>
+      <h1>User Age: {{ data.user.userAge }}</h1>
     </div>
   </div>
 </template>
@@ -16,9 +17,7 @@
 <script setup>
 const route = useRoute();
 
-const { data: user } = await useFetch(
+const { data } = await useFetch(
   () => `http://localhost:5000/api/users/${route.params.id}`
 );
-
-console.log(user.value.user);
 </script>
