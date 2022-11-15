@@ -17,7 +17,7 @@
 <script setup>
 const route = useRoute();
 
-const { data } = await useFetch(
+const { data } = useFetch(
   () => `http://localhost:5000/api/users/${route.params.id}`
 );
 </script>

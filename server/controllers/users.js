@@ -19,9 +19,10 @@ export const createUser = (req, res) => {
         success: false,
       });
     }
+    console.log(response);
     return res.json({
       success: true,
-      response,
+      insertId: response.insertId,
     });
   });
 };

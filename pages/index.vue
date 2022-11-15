@@ -129,6 +129,7 @@ export default {
         body: this.data,
       }).then((response) => {
         if (response.success) {
+          console.log(response);
           this.users.push(this.data);
           this.newUserModel = false;
           this.data = {};
