@@ -1,11 +1,11 @@
 import mysql from "mysql";
 
 var connection = mysql.createConnection({
-  host: "pmya.canary.lmesacademy.net",
-  port: 25060,
-  user: "yugi",
-  password: "dhwiOCh4epPn8tUf",
-  database: "06_yugi",
+  host: "localhost",
+  port: 80,
+  user: "root",
+  password: "",
+  database: "account",
 });
 
 connection.connect();
